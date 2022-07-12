@@ -2,12 +2,23 @@
 
 #An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase,
 #typically using all the original letters exactly once.
+
+(Solution 1)
+
 def isAnagram(s,t):
-    s_list=list(s)         #converting string to list so we can sort later
-    t_list=list(t)
-    s_list.sort()          #sort so that we have ordered string based on characters and we can compare two strings this way
-    t_list.sort()
-    if s_list==t_list:
-        return True
-    else:
+    return sorted(s)==sorted(t)          "Returns True if s and t are equal after sorting"
+    
+
+(Solution 2- using Hashmap)
+
+def isAnagram(s,t):
+    if len(s)!=len(t):                                  "Immediately returns False if length of two strings are different"
         return False
+    counter_s, counter_t={}, {}                         "creates empty hashmap(dictionary) for counts of characters is string s and t"
+    for i in range(len(s)):
+        counter_s[s[i]]=counter_s.get(s[i],0)+1         "each time we see character s[i] we increment the count by 1"
+        counter_t[t[i]]=counter_t.get(t[i],0)+1         "what get will do is to prevent key error and set initial value to 0"
+    for j in counter_s:
+        if counter_s[j]!=counter_t.get(j,0):            "if there is a single count of character in hashmaps are different immediately returns False"
+            return False
+    return True                                         "it otherwise exists from the loop and returns True"
