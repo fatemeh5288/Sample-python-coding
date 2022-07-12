@@ -1,6 +1,8 @@
 #Given an integer array nums, return true if any value appears at least twice in the array, 
 #and return false if every element is distinct.
 #Time complexity O(n) and Space complexity O(n)
+ 
+(First solution)
 
 def containsduplicates(nums):         "define the function"
     new_l=list(set(nums))             "a set will have all the unique elements of the list without repetitin. We then convert to list to compare to nums which is a list"
@@ -12,4 +14,14 @@ def containsduplicates(nums):         "define the function"
 nums = [1,2,3,4]
 containsduplicates(nums)
 
+
+(Second solution)
+
+def containsdups(l):
+    n=len(l)
+    l.sort()                         "sorting the list"
+    for i in range(n-1):
+        if l[i]==l[i+1]:             "if there is a repetetive item, it should be equal to its neighbor element of the list"
+            return True
+    return False
 
