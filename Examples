@@ -1,10 +1,12 @@
 #Given an integer array nums, return true if any value appears at least twice in the array, 
 #and return false if every element is distinct.
 
-def containsduplicates(l):            "define the function"
+def containsduplicates(nums):         "define the function"
     new_l=list(set(nums))             "a set will have all the unique elements of the list without repetitin. We then convert to list to compare to nums which is a list"
     if new_l!=nums:                   "if new_l and nums not equal, it means there was at least one element that had a count of at least 2"
         return(True)
     else:                             "if new_l and nums are equal, this means that all elements were distinct"
         return(False)
 
+nums = [1,2,3,4]
+containsduplicates(nums)
