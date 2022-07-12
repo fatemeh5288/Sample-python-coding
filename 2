@@ -1,0 +1,13 @@
+#Given two strings s and t, return true if t is an anagram of s, and false otherwise.
+
+#An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase,
+#typically using all the original letters exactly once.
+def isAnagram(s,t):
+    s_list=list(s)         #converting string to list so we can sort later
+    t_list=list(t)
+    s_list.sort()          #sort so that we have ordered string based on characters and we can compare two strings this way
+    t_list.sort()
+    if s_list==t_list:
+        return True
+    else:
+        return False
