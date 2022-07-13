@@ -1,9 +1,20 @@
 #Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
 #You may assume that each input would have exactly one solution, and you may not use the same element twice.
 
+(First solution- Time complexity is O(n^2))
 def twosum(nums,target):     
     for i in range(len(nums)):                    "iterates through elements of nums"
-        for j in range(len(nums)):
-            if i!=j:                              "we are looking for two different indices"
+        for j in range(i+1,len(nums)):            "starts iterating from i+1 becausein the previous iteration we already summed i with it's next elements"
+                                         
                 if nums[i]+nums[j]==target:
                     return [i,j]                  "this returns i and j in a list"
+
+Second solution using hashmap- Time complexity is O(n) and memory is O(n) because we are potentially creating a hash map with size n"
+
+def twosum(nums,target):
+    hash_map={}                             "create empty hashmap"
+    for i,n in enumerate(nums):             "iterates through indeces and numbers in nums list"
+        diff=target-n
+        if diff in hash_map:                "if the difference between the target and n already exits in the hash map-next"
+            return[hash_map[diff],i]        "returns index of first number that should be already in the hashmap plus i which is the index of second number"
+        hash_map[n]=i                       "if the diff is not in the hashmap it adds the number and it's index to the hashmap which is going to be the first number for the next loop"
