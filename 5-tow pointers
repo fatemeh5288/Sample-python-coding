@@ -1,0 +1,32 @@
+#You are given an array prices where prices[i] is the price of a given stock on the ith day.
+
+#You want to maximize your profit by choosing a single day to buy one stock and choosing a different day in the future 
+#to sell that stock.Return the maximum profit you can achieve from this transaction. If you cannot achieve any profit, return 0.
+
+(Solution1-time complexity of O(n^2) and space complexity O(n)
+
+def maxprofit(prices):
+    max_profit=[]
+    for i in range(len(prices)):
+        for j in range(i+1,len(prices)):
+            max_profit.append(prices[j]-prices[i])
+    if max(max_profit)>0:
+        return max(max_profit)
+    else:
+        return 0
+        
+    
+  (Solution two using two pointers l and s- time complexity of O(n) and space compelxity of O(1))
+  
+  def maxprofit(prices):
+    l,r=0,1                                      "initialize the pointer at first and second days)
+    max_profit=0                                 "initialize the max_profit to zero)
+    while r<len(prices):                         "continues the while loop until the right pointer reaches the end of array"
+        if prices[l]<prices[r]:
+            profit=prices[r]-prices[l]
+            max_profit=max(max_profit,profit)    "calculates the profit which is the price on day/s after - price of buy (left pointer) and updates the max_profit"
+            
+        else:
+            l=r                                  "if next day is less than the before day we found the aboslute minimum up to this point and set the left pointer at r"
+        r+=1                                     "we increment the r anyway to compare the prices to l on the next loop"
+    return max_profit
