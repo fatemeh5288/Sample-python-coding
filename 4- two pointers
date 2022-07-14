@@ -17,3 +17,25 @@ def ispalindrome(s):
         else:
             return False                    "if the above condition did not meet, it will return False"
     return True                             "if it goes through all steps above and it is not False, then it will return True"
+
+
+(Second solution with same time complexity but memory of O(1) because we did not create any new string or list)
+
+class solution:
+    
+    def ispalindrome(self,s):
+        l,r=0,len(s)-1                                "two pointers one starting from left and the other from right"
+        while l<r:
+            while l<r and not self.alphanum(s[l]):    "while l<r and is alpha numerical char"
+                l+=1
+            while r>l and not self.alphanum(s[r]):
+                r-=1
+            if s[l].upper()!=s[r].upper():
+                return Flase
+            l,r=l+1,r-1                               "if char is not alpha numerical it goes to the next charcater"
+        return True
+    def alphanum(self,t):                          "if we aren't using isalphanum() built-in funtion we can create our own"
+        for char in t:
+            if not (ord('A')<ord(char)<ord('Z') or ord('a')<ord(char)<ord('z') or ord('0')<ord(char)<ord('9')):       "ord is a function to find ASCII values"
+                return False
+        return True  
