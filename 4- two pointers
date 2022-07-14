@@ -1,0 +1,19 @@
+#A phrase is a palindrome if, after converting all uppercase letters into lowercase letters and removing all 
+#non-alphanumeric characters, it reads the same forward and backward. Alphanumeric characters include letters and numbers.
+#Given a string s, return true if it is a palindrome, or false otherwise.
+
+(Solution1)
+
+def ispalindrome(s):
+    
+    new_s=[]                                 "create empty list of string alphabetical chars"
+    for char in s:
+        if char.isalpha():                  "checkes if the char is alphabetical"
+            new_s.append(char.upper())      "new_s list will contain all the characters of string s in uppercase"
+    n=len(new_s)
+    for i in range(0,n//2):                 "we only need to go to half of the list"
+        if new_s[i]==new_s[n-i-1]:          "compare each element of the list with its palindrome"
+            continue                        "we want the loop to continue for all charcaters up to the half length of the list"
+        else:
+            return False                    "if the above condition did not meet, it will return False"
+    return True                             "if it goes through all steps above and it is not False, then it will return True"
