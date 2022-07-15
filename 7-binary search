@@ -1,0 +1,17 @@
+#Given an array of integers nums which is sorted in ascending order, and an integer target, write a function to search target in nums. If target exists, then return its index. Otherwise, return -1.
+#You must write an algorithm with O(log n) runtime complexity.
+
+Time complexity is O(logn)
+
+def search(nums):
+    lo=0                          "define two pointers lo and hi"
+    hi=len(nums)-1
+    while lo<hi:
+        mid=(lo+hi)//2
+        if target>nums[mid]:      "each time we compare the target value to the mid point because it is a sorted array"
+            lo=mid+1              "if targer is larger than mid point, this means that every element from mid to the left can be eliminated"
+        if target<nums[mid]:
+            hi=mid-1
+        if target==nums[mid]:
+            return mid
+    return -1                     "if the target doesn't exist in the array, it will return -1"
