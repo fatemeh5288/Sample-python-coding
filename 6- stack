@@ -1,0 +1,18 @@
+#Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+#An input string is valid if: Open brackets must be closed by the same type of brackets.
+#Open brackets must be closed in the correct order.
+
+Solution with time complexity of O(n) and space complexity of O(n)
+
+def isvalid(s):
+    dic={')':'(','}':'{',']':'['}                   "create a mapping dictionary for each closing paranthese"
+    stack=[]               
+    for c in s:
+        if c in dic:                               "if c is a closing paranthe"
+            if stack and stack[-1]==dic[c]:        "make sure that closing paranthese is not the only char in the stack and that the last element of stack is same as matching open paranthese"
+                stack.pop()                        "if the last two check, pop the elemnt from stack to check the next one"
+            else:
+                return False
+        else:                                      "if it is open paranthese with add to the stack"
+            stack.append(c)
+    return not stack                               "the only condition where this is true is if the stack comes back empty meaning that all the open parantheses were closed and poped from the stack in the last loop"
