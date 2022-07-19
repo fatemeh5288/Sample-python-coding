@@ -1,0 +1,27 @@
+#You are given the heads of two sorted linked lists list1 and list2.
+
+#Merge the two lists in a one sorted list. The list should be made by splicing together the nodes of the first two lists.
+
+#class ListNode:
+    #def __init__(self, val=0, next=None):        "creats a single linked list by defining the value and next pointer"
+        #self.val = val
+        #self.next = next
+class Solution:
+    def mergeTwoLists(self, l1: Optional[ListNode], l2: Optional[ListNode]) -> Optional[ListNode]:
+       
+            dummy=ListNode()                    "creates an empty linked list that will contain later the merged list"
+            tail=dummy
+        
+            while l1 and l2:                   "perform this loop when both lists are not empty"
+                if l1.val<l2.val:              "if value of the node from first list is less than the second list:"
+                    tail.next=l1               "the pointer of the sorted list should go to the lesser node"
+                    l1=l1.next                 "and the pointer on list 1 should go to the next node"
+                else:
+                    tail.next=l2
+                    l2=l2.next
+                tail=tail.next                 "regardless of l1 node is smaller or l2, the poniter of sorted list should go to the next one to be ready for next node"
+            if l1:                            "if only l1 contains values the pointer on the sorted list should go to remainder of l1 since all nodes in l1 is sorted"
+                tail.next=l1
+            elif l2:
+                tail.next=l2
+            return dummy.next
