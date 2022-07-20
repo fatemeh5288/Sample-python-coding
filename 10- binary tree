@@ -1,0 +1,18 @@
+#Given the root of a binary tree, invert the tree, and return its root.
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
+        if not root:                          "if tree is empty return null"
+            return None
+        temp=root.left                        "stores the left node in temp variable"
+        root.left=root.right                  "the new left is the old right(swapped)"
+        root.right=temp                       "the new right is the old left which was stored in temp"
+        self.invertTree(root.left)            "now we do the same thing recursively for the children of the left and right nodes"
+        self.invertTree(root.right)
+        return root
