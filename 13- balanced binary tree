@@ -1,0 +1,26 @@
+Given a binary tree, determine if it is height-balanced.
+
+For this problem, a height-balanced binary tree is defined as:
+
+a binary tree in which the left and right subtrees of every node differ in height by no more than 1.
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isBalanced(self, root: Optional[TreeNode]) -> bool:
+        def len_tree(root):                   "create a function to calculate length of each node"
+            if not root:                      "if we reach the leaf node returns 0"
+                return 0
+            l_len=len_tree(root.left)         "calculate left and right length for each node recursively"
+            r_len=len_tree(root.right)
+            return 1+max(l_len,r_len)         "the length of each node is the max length of left and right nodes plus 1"
+        
+            if abs(l_len-r_len)<=1:          "for this problem if the difference between the left and right nodes is equal or less than 1, we return True"
+                return True
+            else:
+                return False
+        return len_tree(root)                "This will call len_tree function result from the isBalanced function"
