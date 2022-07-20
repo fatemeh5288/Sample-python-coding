@@ -1,0 +1,25 @@
+Given the root of a binary tree, return the length of the diameter of the tree.
+
+The diameter of a binary tree is the length of the longest path between any two nodes in a tree. This path may or may not pass through the root.
+
+The length of a path between two nodes is represented by the number of edges between them.
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
+        ans=[0]                               "this list will be updated each time we find the maximum diameter from each node"
+        def max_height(root):                 "we declare a function max_height that will calculate left and right hight from each node using recursion method"
+            
+            if not root:                     "if we reach null after traversing the tree, it will return 0"
+                return 0
+            lh=max_height(root.left)         
+            rh=max_height(root.right)
+            ans[0]=max(ans[0],lh+rh+1)       "for each node, answer will be updated if we find another maximum. by definition the longest path lh+rh+1 is the diameter of tree"
+            return 1+max(lh,rh)              "the output of the max_height function is the height of tree at each node
+        max_height(root)
+        return ans
