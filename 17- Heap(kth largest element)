@@ -1,0 +1,22 @@
+Design a class to find the kth largest element in a stream. Note that it is the kth largest element in the sorted order, not the kth distinct element.
+
+Implement KthLargest class:
+
+KthLargest(int k, int[] nums) Initializes the object with the integer k and the stream of integers nums.
+int add(int val) Appends the integer val to the stream and returns the element representing the kth largest element in the stream.
+
+
+class KthLargest:
+
+    def __init__(self, k: int, nums: List[int]):     "creating constructor class"
+        self.k,self.minHeap=k,nums                   "creating Heap of nums containing k elements because we only need the kth largest and since values in minHeap is descending we don't care about minimum values"
+        heapq.heapify(self.minHeap)                  "this function creates the Heap data structure of our miniHeap variable"
+        while len(self.minHeap)>k:                   "we only need k elements for the Heap so we are going to remove the rest"
+            heapq.heappop(self.minHeap)              "this function pops the last element which is the minimum value in our Heap"
+        
+
+    def add(self, val: int) -> int:                  "this is the function to add new values to our minHeap"
+        heapq.heappush(self.minHeap,val)             "adding an element with value 'val' to the minHeap"
+        if len(self.minHeap)>self.k:                 "we are going to delete the minimum element of the minHeap only if the length is greater than k"
+            heapq.heappop(self.minHeap)              "removes the minimum element"
+        return self.minHeap[0]                       "in heapify method the root which is the least element has index of zero
