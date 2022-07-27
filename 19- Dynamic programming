@@ -1,0 +1,12 @@
+You are climbing a staircase. It takes n steps to reach the top.
+
+Each time you can either climb 1 or 2 steps. In how many distinct ways can you climb to the top?
+
+class Solution:
+    def climbStairs(self, n: int) -> int:   "this problem is actually a decision tree where there is repetition so we can start from the leaf of the tree and each time reduce the size of n by 1. each case has scenarios equal to summation of it's previous cases and hence we are solving a Fibonacci problem"
+        first,second=1,1                    "these will be initialled from 1 because there is one way to land from its previous stair to the top one"
+        for i in range(n-1):                "we start from the one before last stair"
+            temp=second                     "storing second in temp variable to use it later"
+            second=first+second             "the new second get updated to summation of it's previous nums"
+            first=temp                      
+        return second
