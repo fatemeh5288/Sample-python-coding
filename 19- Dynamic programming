@@ -4,9 +4,9 @@ Each time you can either climb 1 or 2 steps. In how many distinct ways can you c
 
 class Solution:
     def climbStairs(self, n: int) -> int:   "this problem is actually a decision tree where there is repetition so we can start from the leaf of the tree and each time reduce the size of n by 1. each case has scenarios equal to summation of it's previous cases and hence we are solving a Fibonacci problem"
-        first,second=1,1                    "these will be initialled from 1 because there is one way to land from its previous stair to the top one"
-        for i in range(n-1):                "we start from the one before last stair"
-            temp=second                     "storing second in temp variable to use it later"
-            second=first+second             "the new second get updated to summation of it's previous nums"
-            first=temp                      
-        return second
+        a,b=1,1                    "a is the case when there is 0 stairs and there is one way to climb zero stairs and that'd be taking no stairs-there is also one way to take 1 stair"
+        for i in range(2,n+1):                "we start from stair 2 because we already defined the 0 and 1 stair case (bottom-up approach)"
+            c=a+b                    "summing the last two cases a and b "
+            a=b             "chaning the pointer of a to the old b"
+            b=c             "chaning the pointer of b to the old c"     
+        return b            "in the end b is the result"
