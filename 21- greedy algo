@@ -1,0 +1,15 @@
+Given an integer array nums, find the contiguous subarray (containing at least one number) which has the largest sum and return its sum.
+
+A subarray is a contiguous part of an array.
+
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        max_nums=nums[0]                    "we first set the max sum to the first number in the array and update it in each iteration"
+        cur_sum=0                           "set the sum of subarray to zero and update in the for loop"
+        for n in nums:
+            if cur_sum<0:                   "if we reach to negative sum we re-set the current sum to zero"
+                cur_sum=0
+            
+            cur_sum+=n                          "add each element of nums array to the current sum"
+            max_nums=max(cur_sum,max_nums)      "compare this value with sum of arrays that we have stored and store the maximum value in the max_nums"
+        return max_nums
