@@ -1,0 +1,17 @@
+You are given a large integer represented as an integer array digits, where each digits[i] is the ith digit of the integer. The digits are ordered from most significant to least significant in left-to-right order. The large integer does not contain any leading 0's.
+
+Increment the large integer by one and return the resulting array of digits.
+
+class Solution:
+    def plusOne(self, digits: List[int]) -> List[int]:
+        n=len(digits)-1
+        new_num=0
+        for i in range(n,-1,-1):                   "we iterate from n through 0 in the digits list"
+            new_num=new_num+digits[n-i]*(10**i)    "we are taking the power to 10 of elements based on their index in the list. at index 0 the power of then should be max"
+        next_num=new_num+1                         "the next_num value is obtained by adding 1 to new_num"
+        new_list=[]                                "create an empty list that we are going to add the digits later to"
+        while next_num>0:
+            new_list.append(next_num%10)           "the last digit of next_num is added to the list"
+            next_num=next_num//10                  "we store the digits left to next_num and iterate through the loop until it reaches 0"
+        return new_list[::-1]                      "since we were storing digits backward in the list, we need to reverse it in the end"
+        
