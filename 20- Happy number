@@ -1,0 +1,26 @@
+Write an algorithm to determine if a number n is happy.
+
+A happy number is a number defined by the following process:
+
+Starting with any positive integer, replace the number by the sum of the squares of its digits.
+Repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1.
+Those numbers for which this process ends in 1 are happy.
+Return true if n is a happy number, and false if not.
+
+class Solution:
+    def isHappy(self, n: int) -> bool:
+        visit=[]                       "create an empty list that stores n values in each iteration"
+        while n not in visit:          "if n is in the visit it means that the number is not happy and we are stuck in a loop"
+            visit.append(n)            "each time store n values to make sure we aren't stuck in a loop"
+            n=self.sum_digits(n)       "recursive function to get the sum squares of digits of n each time"
+            if n==1:                   "in the while loop we check if n is 1. If this is the case, no need to continue and we immediately return True"
+                return True
+        return False                  "if it exits the while loop due to repeating n value it means that the number is not Happy"
+    
+    def sum_digits(self,n):           "this is the function that returns the sum square of digits in n"
+        sum_init=0
+        while n>0:
+            digit=n%10
+            sum_init+=digit**2
+            n=n//10
+        return sum_init
