@@ -1,0 +1,9 @@
+Reverse bits of a given 32 bits unsigned integer.
+
+class Solution:
+    def reverseBits(self, n: int) -> int:
+        res=0                           "first create an integer with 32 0 bits"
+        for i in range(0,32):
+            bit= (n>>i) & 1             "each time we shift n, i elements to the right and perform & operation with 1"
+            res=(bit<<31-i) | res       "now we shift the bit calculated above to the left by n-1 and or it with previous result, this way we maintain previous result and if bit contains 1 the final result will contain 1"
+        return res
