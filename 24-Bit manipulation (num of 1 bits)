@@ -1,0 +1,27 @@
+Write a function that takes an unsigned integer and returns the number of '1' bits it has (also known as the Hamming weight).
+
+Note:
+
+Note that in some languages, such as Java, there is no unsigned integer type. In this case, the input will be given as a signed integer type. It should not affect your implementation, as the integer's internal binary representation is the same, whether it is signed or unsigned.
+In Java, the compiler represents the signed integers using 2's complement notation. Therefore, in Example 3, the input represents the signed integer. -3.
+
+Time complexity O(1) and space O(1)
+class Solution:
+    def hammingWeight(self, n: int) -> int:
+        res=0
+        while n:             "continue this loop until all digits on n are visited"
+            if n%2==1:       "if mod is 1 it means that it wasn't divisible by 2 and the number is 1"
+                res+=1       "each time add 1 to the result"
+            n=n>>1           "shift n by 1"
+        return res
+        
+        
+ A little faster approac although the time complexity is still the same:
+ 
+ class Solution:
+    def hammingWeight(self, n: int) -> int:
+        res=0
+        while n:
+            n=n & (n-1)       "if we logic and n with itself minus one the last digit that is 1 will be 0 and all the 0s to the right side of last 1 will be 1 (so don't matter)"
+            res+=1            "when we logic and them together the last 1 digit will be removed and counted in res variable"
+        return res
