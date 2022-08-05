@@ -1,0 +1,19 @@
+Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
+
+not a very efficient solution
+ class Solution:
+    def missingNumber(self, nums: List[int]) -> int:
+        n=len(nums)
+        for i in range(0,n+1):
+            if i not in nums:
+                return i
+                
+                
+    another solution with memory complexity of O(1) and time of O(n):
+    
+    class Solution:
+    def missingNumber(self, nums: List[int]) -> int:
+        res=len(nums)                "initialize res value with n because the list has one less index from the range(0,n) and is not to be counted in the for loop below"
+        for i in range(len(nums)):
+            res+=(i-nums[i])         "we are adding all elements in range(0,n) and all elements in nums list and then subtracting-this will result in the missing value"
+        return res
