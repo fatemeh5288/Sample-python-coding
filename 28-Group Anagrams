@@ -1,0 +1,15 @@
+Given an array of strings strs, group the anagrams together. You can return the answer in any order.
+
+An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+answer using hash map with time complexity of O(m*n) where m is the length of list strs and n is the average charachtars of anagram
+
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        ans = collections.defaultdict(list)        "this is to prevent error when dictionary is empty"
+        for s in strs:
+            count=[0]*26                           "we want to record ascii values of each name in the list-since there are 26 char in alphabet we first create a list with 26 zeros and then update"
+            for c in s:
+                count[ord(c)-ord('a')]+=1          "when we subtract ascii value of each character from that of 'a' since they are continous, we would have count[0] to count[26]"
+            ans[tuple(count)].append(s)            "list is not hashable in dict so we need to convert to tuple, if any of the names in strs have same count they would be added to ans"
+        return ans.values()                        "this will only return the names in strs that are anagrams and not the counts which are the keys of dict"
