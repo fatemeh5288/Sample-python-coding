@@ -1,0 +1,13 @@
+Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.
+
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        hashmap={}                          "create a hashmap to store counts of each element in list 'nums'"
+        for i in nums:
+            hashmap[i]=1+hashmap.get(i,0)   "counter to count each element-use .get(i,0) to prevent error when dict is empty"
+        l1=[]                               "this array is to store top k elements of the hashmap"
+        for j in range(k):
+            ans=max(hashmap.values())       "we find the max count of each element"
+            l1.append(hashmap[ans])         "we want the key-we add it to the list l1"
+            hashmap.pop(hashmap[ans])       "each time we delete the ans from hashmap and look for the next maximum value-repeat this k times"
+        return l1                           "this will return the list"
