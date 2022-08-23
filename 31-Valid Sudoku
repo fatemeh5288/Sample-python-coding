@@ -1,0 +1,27 @@
+Determine if a 9 x 9 Sudoku board is valid. Only the filled cells need to be validated according to the following rules:
+
+Each row must contain the digits 1-9 without repetition.
+Each column must contain the digits 1-9 without repetition.
+Each of the nine 3 x 3 sub-boxes of the grid must contain the digits 1-9 without repetition.
+Note:
+
+A Sudoku board (partially filled) could be valid but is not necessarily solvable.
+Only the filled cells need to be validated according to the mentioned rules.
+
+
+class Solution:
+    def isValidSudoku(self, board: List[List[str]]) -> bool:
+        rows=collections.defaultdict(set)         "this will create a dictionary called rows where keys are 0-9 and values are sets that contain elements of board"
+        cols=collections.defaultdict(set)
+        squares=collections.defaultdict(set)
+        
+        for r in range(9):                        "iterate through rows and cols of the board"
+            for c in range(9):
+                if board[r][c]=='.':              "if the cell is empty, continue"
+                    continue
+                if (board[r][c] in rows[r]) or (board[r][c] in cols[c]) or (board[r][c] in squares[(r//3,c//3)]):   "if the element is present it means that there is a repetition"
+                    return False
+                rows[r].add(board[r][c])                   "we visit each cell of the board once and add it to the dictionary"
+                cols[c].add(board[r][c])
+                squares[(r//3,c//3)].add(board[r][c])     "for the squares we take the integer division of three so that we have the 9 elements of each square stored as one key,value item in dictionary so that we can check if there is repetion in each square"
+        return True
