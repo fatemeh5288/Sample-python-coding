@@ -1,0 +1,25 @@
+Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+
+Notice that the solution set must not contain duplicate triplets.
+
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        res=[]
+        nums.sort()                                       "we need to sort the list so that we can use two pointers and avoid repetition of sublists"
+        for i,a in enumerate(nums):                       "we first check if value of nums[i] is equal to the previous element,if it is we increment by 1 to avoid repetition"
+            if i>0 and a==nums[i-1]:
+                i+=1
+            l,r=i+1,len(nums)-1                           "the left pointer is the next element after i and right pointer last element, the i pointer is constant through each iteration"
+            while l<r:
+                threeSum=nums[i]+nums[l]+nums[r]
+                if threeSum>0:                            "if the sum is more than 0 we want to decrease the sum and since the list is sorted we shift the right pointer by 1"
+                    r-=1
+                elif threeSum<0:
+                    l+=1
+                else:
+                    res.append([nums[i],nums[l],nums[r]])    "append the 3 indices to the result"
+                    l+=1                                     "here we want to check other numbers keeping i constant, so we increment left pointer by 1"
+                    while nums[l]==nums[l-1] and l<r:        "we need to again check if the left pointer is repeated, if so increment l by 1"
+                        l+=1
+            
+        return res
