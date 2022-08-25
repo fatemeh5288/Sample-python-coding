@@ -1,0 +1,17 @@
+Given a string s, find the length of the longest substring without repeating characters.
+
+
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        charset=set()                    "we convert to set so it doesn't add dupicate values to the substring"
+        l=0                              "set left pointer to 0"
+        length=0                         "we are going to keep track and update the max length of substring each time"
+        for r in range(len(s)):          "the right pointer goes through all the characters in string s"
+            while s[r] in charset:       "if the right pointer contains element that is already in the set, we want to remove characters from left until the character is not there"
+                charset.remove(s[l])
+                l+=1                     "each time we remove characters from left we increment the left pointer to check the next value against s[r]"
+            charset.add(s[r])            "if the character is not already in the set(we checked this in while loop" we are going to add it to the set"
+            
+            length=max(length,r-l+1)     "we keep track of max value by keeping the length from previous substring and comparing to the new substring that contains r-l+1 characters"
+        return length
+                
