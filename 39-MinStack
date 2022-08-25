@@ -1,0 +1,31 @@
+Design a stack that supports push, pop, top, and retrieving the minimum element in constant time.
+
+Implement the MinStack class:
+
+MinStack() initializes the stack object.
+void push(int val) pushes the element val onto the stack.
+void pop() removes the element on the top of the stack.
+int top() gets the top element of the stack.
+int getMin() retrieves the minimum element in the stack.
+You must implement a solution with O(1) time complexity for each function.
+
+
+Note:stack already supports O(1) time for push and pop but for min value we should create another stack where min elemet can be retrieved from top of the stack in O(1) time"
+class MinStack:
+
+    def __init__(self):
+        self.stack=[]                        "we create two stacks: one to store values and other to store min values in each iteration. This way when we reach top of the minStack we are retrieving the minimum element"
+        self.minStack=[]
+    def push(self, val: int) -> None:        
+        self.stack.append(val)
+        if self.minStack:                    "if minStack is empty we just take the val, but if there is an element already in there it should be compared to val and next we take minimum of these two"
+            val=min(val,self.minStack[-1])
+        self.minStack.append(val)
+    def pop(self) -> None:
+        self.stack.pop()
+        self.minStack.pop()
+    def top(self) -> int:                   "this is just to return top-most element"
+        return self.stack[-1]
+
+    def getMin(self) -> int:
+        return self.minStack[-1]           "the top-most element of minStack will actually be the min value in O(1) time"
