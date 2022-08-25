@@ -1,0 +1,19 @@
+You are given a string s and an integer k. You can choose any character of the string and change it to any other uppercase English character. You can perform this operation at most k times.
+
+Return the length of the longest substring containing the same letter you can get after performing the above operations.
+
+Operation in O(n) time and O(n) space
+
+class Solution:
+    def characterReplacement(self, s: str, k: int) -> int:
+        max_length=0
+        l=0
+        alph_counts={}                                            "we record counts of all characters in each substring (between l and r pointers)"
+        for r in range(len(s)):
+            alph_counts[s[r]]=1+alph_counts.get(s[r],0)           "each time sliding r pointer to the right, we add it's frequency to the dictionary"
+            if ((r-l+1) - max(alph_counts.values())) <= k:        "if the length of window minus the most frequent char is less than k, it is a valid window and can potentially give us the max_length value"
+                max_length=max(max_length,r-l+1)                  "we check the current window length against the max_length from previous iteration"
+            else:                                                 "if the window in above statement was not valid, we want to shift the left pointer to the left"
+                alph_counts[s[l]]-=1                              "hencewhy we have to reduce frequnecy of the left most character"
+                l+=1
+        return max_length
