@@ -1,0 +1,24 @@
+Given two strings s1 and s2, return true if s2 contains a permutation of s1, or false otherwise.
+
+In other words, return true if one of s1's permutations is the substring of s2.
+
+class Solution:
+    def checkInclusion(self, s1: str, s2: str) -> bool:
+        if len(s1)>len(s2):
+            return False
+        counts1,counts2={},{}                            "create hashmaps of counts1 and counts2. s1 count is constant but counts2 is for each window in s2 that we iterate"
+        
+        for i in range(len(s1)):                         "we generate dictionary of counts1"
+            counts1[s1[i]]=1+counts1.get(s1[i],0)
+        
+        l,r=0,0
+        while r in range(len(s2)):                      "continue loop until we reach the end of s2 string where the r pointer is poiting at the last element"
+            for i in range(l,l+len(s1)):                 "each time because we are shifting window to the right we obtain the new dictionary for s2 ranging from l to l+len(s1)"
+                counts2[s2[i]]=1+counts2.get(s2[i],0)
+            if counts1==counts2:                        "if we find this window in s2 no need to continue and we can immdediately return True"
+                return True
+            else:                                       "else we want to shift left pointer and update the dictionary hence clearing it before next iteration"
+                counts2.clear()
+                l+=1
+                r=l+len(s1)
+        return False
