@@ -1,0 +1,16 @@
+Given an array of integers temperatures represents the daily temperatures, return an array answer such that answer[i] is the number of days you have to wait after the ith day to get a warmer temperature. If there is no future day for which this is possible, keep answer[i] == 0 instead.
+
+
+This will run in O(n) time and O(n) space
+
+
+class Solution:
+    def dailyTemperatures(self, temperatures: List[int]) -> List[int]:
+        stack=[]                               "this is to retrieve the top element of stack which will be the first element for which we have found the next higher temp"
+        output=[0]*len(temperatures)           "we initialize the output to 0. This will take care of the last element and the elements for which we don't have a next higher temp"
+        for i,t in enumerate(temperatures):    "we want to record the index and temp of each visited element"
+            while stack and t>stack[-1][0]:    "this will continue untill stack is not empty and until we find the next higher temp value"
+                temp,ind=stack.pop()           "this will be the index and temp of topmost element of list for which we have found next higher temp in temeperatures array"
+                output[ind]=i-ind              "the output will be updated to i which the index of next higher value minus ind which is the indext of topmost value in stack"
+            stack.append([t,i])                "each time the next temp and i will be added to stack from temperatures array"
+        return output
