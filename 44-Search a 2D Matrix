@@ -1,0 +1,30 @@
+Write an efficient algorithm that searches for a value target in an m x n integer matrix matrix. This matrix has the following properties:
+
+Integers in each row are sorted from left to right.
+The first integer of each row is greater than the last integer of the previous row.
+
+This algorithm will run at log(n)+log(m) time-two binary searches one to find the row and the other to find the target in the row
+
+class Solution:
+    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:
+        rows,cols=len(matrix),len(matrix[0])
+        top,bot=0,rows-1                        "top row is the topmost row in matrix and bottom row is the bottommost row"
+        
+        while top<=bot:                       "run this while loop until we find mid_row which either contains the element or not"
+            mid_row=(top+bot)//2
+            if target<matrix[mid_row][0]:       "check if it the less than the smallest element it means that it might be in the previous row hence shift the bot pointer up"
+                bot=mid_row-1
+            elif target>matrix[mid_row][-1]:
+                top=mid_row+1
+            else:
+                break
+        lo,hi=0,cols-1                               "once we found the row that might contain the elemnt we do another binary search here"
+        while lo<=hi:
+            mid_ind=(lo+hi)//2
+            if target<matrix[mid_row][mid_ind]:
+                hi=mid_ind-1
+            elif target>matrix[mid_row][mid_ind]:
+                lo=mid_ind+1
+            else:
+                return True
+        return False
