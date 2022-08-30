@@ -1,0 +1,38 @@
+You are given the head of a singly linked-list. The list can be represented as:
+
+L0 → L1 → … → Ln - 1 → Ln
+Reorder the list to be on the following form:
+
+L0 → Ln → L1 → Ln - 1 → L2 → Ln - 2 → …
+You may not modify the values in the list's nodes. Only nodes themselves may be changed.
+
+This algorithm will run at O(n) time and O(1) space since we are not creating another linked list
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def reorderList(self, head: Optional[ListNode]) -> None:
+        slow,fast=head,head.next     "in this part we want to divide the list into first and second portion because we want to reverse the second portion right in the middle of the lsit"
+        while fast and fast.next:    "we use slow and fast pointers that fast pointer makes two jumps and slow only one jump"
+            slow=slow.next
+            fast=fast.next.next      "when fast reaches end of the array or null, the next element after slow pointer will be the second portion of the list"
+        second=slow.next             "the next element after slow pointer we will call second"
+        slow.next=None               "we direct the slow pointer to null showing that the first posrtion of the list ends here"
+        
+        prev=None                    "in this section we want to reverse the second portion of the list"
+        while second:                "continue until the second pointer reaches end of the list"
+            temp=second.next
+            second.next=prev
+            prev=second
+            second=temp
+        
+        l1,l2=head,prev                   "in this section we want to connect the two linked lists and hence define two poinetrs which will start at the beginning of the two lists"
+        while l2:
+            temp1,temp2=l1.next,l2.next   "since we want to break the connections we store the next nodes in variables temp1 and temp2"
+            l1.next=l2                    "make the next element after l1 to be l2"
+            l2.next=temp1                 "and the next element after l2 to be temp1 which we stored previously"
+            l1,l2=temp1,temp2             "we shift l1 and l2 pointers at this time"
+        return head
