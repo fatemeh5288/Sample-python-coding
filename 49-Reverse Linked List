@@ -1,0 +1,18 @@
+Given the head of a singly linked list, reverse the list, and return the reversed list.
+
+This will run in O(n) time 
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        prev,curr=None, head  "We set the prev pointer to null and the curr pointer to the first node of linked list which is head"
+        while curr:           "when the curr is null it means that we have reached end of linked list and all nodes are reversed"
+            temp=curr.next    "we first store the next value after curr in a temp variable because we are going to reverse pointer and hence lose the link to the next node"
+            curr.next=prev    "we set the pointer to prev and hence reversing the link"
+            prev=curr         "next replace the curr pointer with prev"
+            curr=temp         "and replace temp with curr pointer"
+        return prev
