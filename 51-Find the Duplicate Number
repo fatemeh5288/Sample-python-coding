@@ -1,0 +1,26 @@
+Given an array of integers nums containing n + 1 integers where each integer is in the range [1, n] inclusive.
+
+There is only one repeated number in nums, return this repeated number.
+
+You must solve the problem without modifying the array nums and uses only constant extra space.
+
+This algorithm will run in O(n) time and O(1) space
+-First should recognize that this is a linked list and every element is a pointer that points to the index it is reading and since n is smaller than length of array there
+should be a cycle
+-Next step is solve the problem by Floyd's method which says that the slow and fast pointer will meet at some index i and if you create another slow pointer and move it along 
+with the olde pointer they are going to meet at the start of the cycle which is our answer
+
+class Solution:
+    def findDuplicate(self, nums: List[int]) -> int:
+        slow,fast=0,0  
+        while True:                 "continue this loop until the slow and fast pointer meet"
+            slow=nums[slow]         "slow pointer makes one jump"
+            fast=nums[nums[fast]]   "fast pointer make two jumps"
+            if slow==fast:          "when we find where pointers meet we exit out of the loop"
+                break
+        
+        slow2=0
+        while True:             "we create another slow2 pointer that starts from beginning of the array- the point where slow and slow2 meet is our answer"
+            slow=nums[slow]
+            slow2=nums[slow2]
+            if slow==slow2:
