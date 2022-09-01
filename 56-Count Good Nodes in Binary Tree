@@ -1,0 +1,23 @@
+Given a binary tree root, a node X in the tree is named good if in the path from root to X there are no nodes with a value greater than X.
+
+Return the number of good nodes in the binary tree.
+
+This will run in O(n) time and O(h) space where h is height of tree since dfs stores only current path it is pursuing hence linear func of depth
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def goodNodes(self, root: TreeNode) -> int:
+        def dfs(root,maxVal):                   "we path the node and maxVal each time the dfs function is run"
+            if not root:                        "this is when there is an empty node"
+                return 0
+            res=1 if root.val>=maxVal else 0    "if the node is greater than the max we already stored, res is 1 else 0"
+            maxVal=max(maxVal,root.val)         "we update max value"
+            res+=dfs(root.left,maxVal)          "run function recursively on the left and right children"
+            res+=dfs(root.right,maxVal)
+            return res
+        return dfs(root,root.val)               "to execute dfs we pass root and set the maxval to the value of root node"
