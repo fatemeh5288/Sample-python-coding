@@ -1,0 +1,17 @@
+Given the root of a binary tree, imagine yourself standing on the right side of it, return the values of the nodes you can see ordered from top to bottom.
+
+class Solution:
+    def rightSideView(self, root: TreeNode) -> List[int]:
+        res = []
+        q = collections.deque([root])       "we add the root to the q"
+        while q:
+            level=[]                     "once we collect nodes at every level we append the rightmost element of it to the res"
+            for i in range(len(q)):       "BFS to obtain nodes at each level and append its children to q"
+                node=q.popleft()
+                level.append(node.val)
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
+            res.append(level[-1])       "we only add the rightmost element at every level to final res"
+        return res
