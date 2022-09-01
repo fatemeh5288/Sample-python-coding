@@ -1,0 +1,28 @@
+Given the root of a binary tree, return the level order traversal of its nodes' values. (i.e., from left to right, level by level).
+
+-This can be solved in O(n) time and space using BFS algorithm. for BFS algo we should use queue data structure with first in first out approach (we pop from left and append to right)
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        q=collections.deque()         "creating a queue"
+        if root:                      "append the root to q only if it not null"
+            q.append(root)
+        res=[]                          "this will store the final result which will be list of lists (list of nodes in each level)"
+        while q:                          "when q gets empty it means that we have reach end of the tree"
+            level=[]
+            qlen=len(q)                    "this will iterate only through nodes of each level and doesn't consider the children that are added in the next step"
+            for i in range(qlen):
+                node=q.popleft()             "we pop from the left and append its children to the q"
+                level.append(node.val)       "the node will be added to level"
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
+            res.append(level)               "after we are done with this level we add the results to final result which is res list"
+        return res
