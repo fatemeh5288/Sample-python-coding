@@ -1,0 +1,21 @@
+Given the root of a binary search tree, and an integer k, return the kth smallest value (1-indexed) of all the values of the nodes in the tree.
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        stack=[]                    "we create a stack to store nodes and each time we pop it is going to be smallest value from stack because we go through left nodes which contain smallest values first"
+        curr=root
+        while curr or stack:        "we continue while loop until we reach end of tree or there is remaining element in the stack"
+            while curr:
+                stack.append(curr)  
+                curr=curr.left     "we set pointer to left because we want to go through the left nodes first"
+            curr=stack.pop()       "when we pop it is going to be smallest value because of binary tree property that left nodes are smaller than right nodes"
+            k-=1
+            if k==0:               "we return value once we want the kth min node"
+                return curr.val
+            curr=curr.right        "otherwise if we don't find the element we update the pointer to right node and go through the while loop again"
