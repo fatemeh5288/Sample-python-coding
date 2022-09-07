@@ -1,0 +1,24 @@
+Given the root of a binary tree, determine if it is a valid binary search tree (BST).
+
+A valid BST is defined as follows:
+
+The left subtree of a node contains only nodes with keys less than the node's key.
+The right subtree of a node contains only nodes with keys greater than the node's key.
+Both the left and right subtrees must also be binary search trees.
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        def valid(node,left,right):
+            if not node:                                "base case if tree is empty it is considered a valid binary tree"
+                return True
+            if not (node.val<right and node.val>left):  "the value of each node should be less than the right boundary and higher than the left boundary-otherwise return False"
+                return False
+            if (valid(node.left,left,node.val) and valid(node.right,node.val,right)):   "this will recurively go through 'valid' function and if it is  left node it will update the upper boundary to the value of parent node and if it is a right node it will update the lower boundary to that of parent node"
+                return True
+        return valid(root,float('-inf'),float('+inf'))  "we will call the function by passing root and initially specifing the upper and lower boundary to infinity"
