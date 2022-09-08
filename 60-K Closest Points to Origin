@@ -1,0 +1,18 @@
+Given an array of points where points[i] = [xi, yi] represents a point on the X-Y plane and an integer k, return the k closest points to the origin (0, 0).
+
+The distance between two points on the X-Y plane is the Euclidean distance (i.e., √(x1 - x2)2 + (y1 - y2)2).
+
+You may return the answer in any order. The answer is guaranteed to be unique (except for the order that it is in).
+
+class Solution:
+    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+        l1=[]
+        for x,y in points:               "we want to create a minheap that contains distances from center in descending ordering hence the last k elements of the heap are the closets to center" the closest to the 
+            dist=abs(x)**2 + abs(y)**2
+            l1.append([dist,x,y])        "we also store x,y in our heap so we can access them later"
+        heapq.heapify(l1)        "convert the list to minHeap"
+        output=[]                       "this is to store last k elements of the heap"
+        for i in range(k):
+            dist,x,y=heapq.heappop(l1)
+            output.append([x,y])
+        return output
