@@ -1,0 +1,23 @@
+Given an array of distinct integers candidates and a target integer target, return a list of all unique combinations of candidates where the chosen numbers sum to target. You may return the combinations in any order.
+
+The same number may be chosen from candidates an unlimited number of times. Two combinations are unique if the frequency of at least one of the chosen numbers is different.
+
+It is guaranteed that the number of unique combinations that sum up to target is less than 150 combinations for the given input.
+
+class Solution:
+    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
+        res=[]
+        sublist=[]
+        def dfs(i,sublist,total):                "we give starting point i, sublist after each recursive call, and total of the numbers in each sublist to the dfs function"
+            if total==target:                    "if our sublist total equals target we have found one array hence append it to the res"
+                res.append(sublist.copy())       "we append the copy because we are changing sublist each time"
+                return
+            if total>target or i==len(candidates):   "if our summation is greater than target or if we reach end of candidates array we stop the recursive call"
+                return
+            sublist.append(candidates[i])            "we have the option to either add i or not, if we add:"
+            dfs(i,sublist,total+candidates[i])       "we can use same number unlimited number of times, hence start dfs from i again, next we add value of index i to total"
+            
+            sublist.pop()                            "if we choose not to add i, we pop it from previous sublist"
+            dfs(i+1,sublist,total)                   "since we are not allowed that same number we start from i+1 and don't change the sum because we didn't add any new value"
+        dfs(0,[],0)
+        return res
