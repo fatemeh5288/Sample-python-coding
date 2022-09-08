@@ -1,0 +1,22 @@
+Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree, construct and return the binary tree.
+
+Explanation: in preorder traversal we first start with the root, then left subtree, then right subtree but in inorder traversal we first go to the left subtree, then root,
+then right subtree
+because of this first node in preorder is going to be always the root, find index of that root in inorder traversal, anything to the left going to be left subtree
+and anything to right of mid is right subtree- we repeat this recursively
+
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+class Solution:
+    def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        if not preorder or not inorder:
+            return None
+        root=TreeNode(preorder[0])                                    "we first start with the root and divide it to left and right subtree and do the same on each subtree recursively"
+        mid=inorder.index(preorder[0])
+        root.left=self.buildTree(preorder[1:mid+1],inorder[:mid])    "anything to the left of inorder is left subtree and vice versa for right subtree"
+        root.right=self.buildTree(preorder[mid+1:],inorder[mid+1:])
+        return root
