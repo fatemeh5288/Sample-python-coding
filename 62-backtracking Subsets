@@ -1,0 +1,18 @@
+Given an integer array nums of unique elements, return all possible subsets (the power set).
+
+The solution set must not contain duplicate subsets. Return the solution in any order.
+
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        res=[]
+        subset=[]
+        def dfs(i):                         "we recursively make a decision for each element in nums to either add it or not add it to the subset"
+            if i==len(nums):                "when this happens it means that we have reach end of nums and visited all the elements"
+                res.append(subset.copy())   "we append copy of subset to res because subset is changing in each iteration"
+                return
+            subset.append(nums[i])          "this is the decision to add nums[i] to the subset and next we do the same after updating i to i+1"
+            dfs(i+1)
+            subset.pop()                    "this is the decision not to add i so we delete it from subset and update i to i+1"
+            dfs(i+1)
+        dfs(0)                              "we call the function starting from 0 meaning the first element of array nums"
+        return res
