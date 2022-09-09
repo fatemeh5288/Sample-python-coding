@@ -1,0 +1,15 @@
+Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        if len(nums)==1:            "the base case is if nums has only one element, we will retun itself"
+            return [nums.copy()]
+        res=[]
+        for i in range(len(nums)):     "we start from beginning of nums and each time pop one value from left and find permutations of that by cally permute func recursively"
+            n=nums.pop(0)
+            perms=self.permute(nums)
+            for perm in perms:        "for each permutation we add what we deleted in previous step so we can add it to the res"
+                perm.append(n)
+            res.extend(perms)
+            nums.append(n)           "we put back the n that we popped earlier so we can do the same for the other combinations"
+        return res
