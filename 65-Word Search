@@ -1,0 +1,24 @@
+Given an m x n grid of characters board and a string word, return true if word exists in the grid.
+
+The word can be constructed from letters of sequentially adjacent cells, where adjacent cells are horizontally or vertically neighboring. The same letter cell may not be used more than once.
+
+
+class Solution:
+    def exist(self, board: List[List[str]], word: str) -> bool:
+        rows,cols=len(board),len(board[0])
+        path=set()               "we store index of the cell that we visited so we don't go back to it"
+        def dfs(r,c,i):
+            if i==len(word):         "this means that we have reached end of the word and every character were found"
+                return True
+            if (r<0 or c<0 or r>=rows or c>=cols        "if the r, c is out of bounce meaning less than 0 or greater than size of board, or if the char was not equla to the same character in word or if we visited the char before, we return False and continue our search for other chars"
+            or board[r][c]!=word[i] or (r,c) in path):
+                return False
+            path.add((r,c))                             "we store the indices in path"
+            res=(dfs(r,c+1,i+1) or dfs(r,c-1,i+1) or dfs(r+1,c,i+1)  "if the above condition did not meet (turned out True) then we want to look at all neighbors of that char and hence run dfs again on all its neighbors"
+                or dfs(r-1,c,i+1))
+            return res
+        for r in range(rows):        "now we check every cell in the board to find first char that matches the char in word"
+            for c in range(cols):
+                if dfs(r,c,0):       "then we run dfs on every char to see if the neighbors are also found"
+                    return True
+        return False                 "returns False if we did not find all the chars in word"
