@@ -1,0 +1,55 @@
+Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), return the number of islands.
+
+An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.
+
+dfs algorithm:
+class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        if not grid or not grid[0]:
+            return 0
+        rows,cols=len(grid),len(grid[0])
+        visited=set()    "we stored all the visited cells so we don't go back to the same one"
+        islands=0
+        def dfs(r,c):
+            if (r not in range(rows) or c not in range(cols) or grid[r][c]=='0' or (r,c) in visited):  "if any of these happen we don't want to store the indices of the cell"
+                return 
+            visited.add((r,c))           "if the above condition didn't meet it means that we have a cell that can be an island"
+            directions=[[-1,0],[1,0],[0,-1],[0,1]]  "we want to check all the neighbors of that cell"
+            for a,b in directions:
+                dfs(r+a,c+b)         "hence run dfs on all the neighbors"
+                   
+        for r in range(rows):           "now we have to check for all cells in the grid to see which one is 1 and is not already visited"
+            for c in range(cols):
+                if grid[r][c]=='1' and (r,c) not in visited:   "when dfs get executed once it means that we have 1 island"
+                    islands+=1
+                    dfs(r,c)
+        return islands
+       
+ bfs algorithm:
+ class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        if not grid or not grid[0]:
+            return 0
+        rows,cols=len(grid),len(grid[0])
+        visited=set()
+        
+        islands=0
+        def bfs(r,c):
+            q=collections.deque()    "difference to dfs is that we are doing level order search hence need to store values in a deque and each time pop from left and find all its neighbors and append to queue"
+            if (r not in range(rows) or c not in range(cols) or grid[r][c]==0 or (r,c) in visited):
+                return
+            q.append((r,c))
+            visited.add((r,c))
+            while q:        "we continue popping from left and appending all the neighbors of popped element to queue until all the elements in that island is found"
+                a,b=q.popleft()
+                directions=[[-1,0],[1,0],[0,1],[0,-1]]
+                for i,j in directions:
+                    if ((a+i) in range(rows) and (b+j) in range(cols) and grid[a+i][b+j]=='1' and (a+i,b+j) not in visited):
+                        q.append((a+i,b+j))
+                        visited.add((a+i,b+j))
+        for r in range(rows):
+            for c in range(cols):
+                if grid[r][c]=='1' and (r,c) not in visited:
+                    bfs(r,c)
+                    islands+=1
+        return islands
