@@ -1,0 +1,26 @@
+There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.
+
+For example, the pair [0, 1], indicates that to take course 0 you have to first take course 1.
+Return true if you can finish all courses. Otherwise, return false.
+
+class Solution:
+    def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        hashmap={i:[] for i in range(numCourses)}   "we create a hashmap so that we can store each course as key and its prerequisites as values"
+        for course,pre in prerequisites:            "we run through the list that we have and complete the hashmap"
+            hashmap[course].append(pre)
+        visited=set()                               "create this to make sure we are not going back to same node and if there is a loop then we can detect it doing so"
+        def dfs(course):
+            if hashmap[course]==[]:                "if there is no prerequisie for a specific course then that course can be completed and hence return True"
+                return True
+            if course in visited:                 "this happens when we have a loop meaning that this cannot be completed and hence return False"
+                return False
+            visited.add(course)                   "if condition above is True the course is added to our set"
+            for pre in hashmap[course]:          "next we g through prerequisites of each course and run dfs on it (checking prerequisites of prerequisites!!)"
+                if not dfs(pre):                  "if our dfs returns False for prerequisises we can immediately return False"
+                    return False
+            hashmap[course]=[]                    "if the above for loop is completed it means that the course can be completed hence we can empty it's prerequisites"
+            return True                           "if all above conditions are met the  final True indicates completition of dfs for that particular course"
+        for c in range(numCourses):               "in the end we go through every single cours and call dfs on it- the reason we run through all courses is that the graph might not be fully connected"
+            if not dfs(c):
+                return False
+        return True
