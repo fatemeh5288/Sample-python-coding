@@ -1,0 +1,20 @@
+You are a professional robber planning to rob houses along a street. Each house has a certain amount of money stashed. All houses at this place are arranged in a circle. That means the first house is the neighbor of the last one. Meanwhile, adjacent houses have a security system connected, and it will automatically contact the police if two adjacent houses were broken into on the same night.
+
+Given an integer array nums representing the amount of money of each house, return the maximum amount of money you can rob tonight without alerting the police.
+
+time complexity O(n) and space O(1)
+
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        n=len(nums)
+        if n==1:                                  "if array contains only one element we don't want to skip the first and last element as shown below and will just return the number we have in array"
+            return nums[0]
+        
+        return max(self.func(nums[:n-1]),self.func(nums[1:]))  "we apply the helper func once to array without the first element and the other time without last element and choose the max between these two"
+    def func(self,nums):                          "this helper function is to give us max number without considering the first and last elements are neighbors"
+        dp=[0]*len(nums)
+        dp[0]=nums[0]
+        dp[1]=max(nums[0],nums[1])
+        for i in range(2,len(nums)):              "we start from 2 till end of array and we have 2 choices to either sum this new value with dp[i-2] or skip it and just use dp[i-1]
+            dp[i]=max(dp[i-2]+nums[i],dp[i-1])
+        return dp[-1]                             "last element in dp array is the max value that we want to return"
