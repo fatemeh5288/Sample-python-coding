@@ -1,0 +1,16 @@
+Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words.
+
+Note that the same word in the dictionary may be reused multiple times in the segmentation.
+
+
+class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        dp=[False]*(len(s)+1)          "we cache False for all dps"
+        dp[len(s)]=True                "and only set the last one False- eveytime we find the word in s dp[i] will be zero, we can set dp[i] to dp[i+len(word)] so than when dp[0] turns out True it means that we found all substrings of s in dict"
+        for i in range(len(s)-1,-1,-1): "starting backward we iterate through s and see if substring matches to any of the words in dict"
+            for word in wordDict:
+                if i+len(word)<=len(s) and s[i:i+len(word)]==word:    "we can only compare if len(s) is greater than the substring"
+                    dp[i]=dp[i+len(word)]                "if above condition meet-we set dp dp[i+len(word)] making sure that they are linked when we reach 0"
+                    i=i-len(word)
+                    break
+        return dp[0]    "if this is True then it shows that all ausbtrings were found in dict"
