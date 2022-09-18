@@ -1,0 +1,17 @@
+There is a robot on an m x n grid. The robot is initially located at the top-left corner (i.e., grid[0][0]). The robot tries to move to the bottom-right corner (i.e., grid[m - 1][n - 1]). The robot can only move either down or right at any point in time.
+
+Given the two integers m and n, return the number of possible unique paths that the robot can take to reach the bottom-right corner.
+
+The test cases are generated so that the answer will be less than or equal to 2 * 109.
+
+space complexity O(n) and time complexity O(m*n)
+
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        row=[1]*n                                 "we start from the last row-there is only one way to reach last element because you can only go right"
+        for i in range(m-1):                      "we only do this for all rows except the last one bacuse of reason mentioned above"
+            newrow=[1]*n                          "each time we are analyzing a row we call it newrow and the row below remains as row"
+            for j in range(n-2,-1,-1):            "we don't change elements in last column either because there is only one way to reach last element from there"
+                newrow[j]=newrow[j+1]+row[j]      "from each cell the total number of ways you can go down plus total number of ways you can go right is the number of ways you can reach last element from that cell"
+            row=newrow                            "we update the row with newrow values so we can analyze the upper row now"
+        return row[0]
