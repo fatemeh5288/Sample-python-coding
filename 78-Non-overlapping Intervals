@@ -1,0 +1,16 @@
+Given an array of intervals intervals where intervals[i] = [starti, endi], return the minimum number of intervals you need to remove to make the rest of the intervals non-overlapping.
+
+time complexity is O(logn) because we are sorting
+
+class Solution:
+    def eraseOverlapIntervals(self, intervals: List[List[int]]) -> int:
+        res=0
+        intervals.sort()                 "this will sort by strat and if there is a tie between ends it will sort by ends"
+        prevend=intervals[0][1]          "we set prevend to end of first element"
+        for start,end in intervals[1:]:
+            if start>=prevend:           "this means that they are nonoverlapping and since end is greater than prevend we just update it"
+                prevend=end
+            else:                        "when they are overlapping we increment the res by 1 and we have to decide to remove one of the elements"
+                res+=1
+                prevend=min(prevend,end)  "we keep the element that ends earlier because the smaller the array is the less chance it will overlap with others"
+        return res
