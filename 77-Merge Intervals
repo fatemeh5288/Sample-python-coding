@@ -1,0 +1,16 @@
+Given an array of intervals where intervals[i] = [starti, endi], merge all overlapping intervals, and return an array of the non-overlapping intervals that cover all the intervals in the input.
+
+time complexity O(nlogn) because of sorting
+
+class Solution:
+    def merge(self, intervals: List[List[int]]) -> List[List[int]]:
+        intervals.sort(key=lambda i:i[0]) "we only sort by start"
+        res=[intervals[0]]                "we add the first elemnt since it is sorted now and then compare each subsequent element in the array with most recent element in res"
+        for start,end in intervals[1:]: 
+            lastend=res[-1][1]            "we store the end of the most recent element in lastend variable"
+            if lastend<start:             "this means that they don't overlap so we can simply append to res"
+                res.append([start,end])
+            elif lastend>=start:             "if they do overlap, since starting point is already sorted we just need to update the end point and merge the two arrays together"
+                res[-1][1]=max(end,lastend)
+        return res
+        
