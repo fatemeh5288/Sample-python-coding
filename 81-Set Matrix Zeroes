@@ -1,0 +1,36 @@
+Given an m x n integer matrix matrix, if an element is 0, set its entire row and column to 0's.
+
+You must do it in place.
+
+we can do this in O(m*n) space by copying the matrix and updating the copy but reading from original matrix because each time we are changing the matrix it will affect
+the rows that should be zero. we can improve the space by having an array of size m and size n O(m+n) and marking these arrays with 0 each time we see 0 in rows and 
+columns. lastly we can do this in place and in O(1) by marking the first row and first column. the only exception is that first cell will overlap between these two
+so we make a single variable that first set it to False and then analyze it seperately.
+
+class Solution:
+    def setZeroes(self, matrix: List[List[int]]) -> None:
+        rows,cols=len(matrix),len(matrix[0])
+        firstzero=False
+        for i in range(rows):          "here we first want to see which cells are 0, if they were we mark corresponding row/column to 0"
+            for j in range(cols):
+                if matrix[i][j]==0:
+                    matrix[0][j]=0
+                    if i>=1:               "the only exception is first row, if we had 0 values in first row we just set firstzero to True"
+                        matrix[i][0]=0
+                    else:
+                        firstzero=True
+        for i in range(1,rows):          "here we set all corresponding rows and columns to 0 with exception of first row and column because we have already set them to 0 in previous step"
+            for j in range(1,cols):
+                if matrix[0][j]==0:
+                    matrix[i][j]=0
+                if matrix[i][0]==0:
+                    matrix[i][j]=0
+        if matrix[0][0]==0:             "now look at only the first cell and see if it is zero"
+            for i in range(rows):
+                for j in range(cols):
+                    matrix[0][j]=0
+                    matrix[i][0]=0
+        if firstzero:                  "this will show if any of the values in first row were zero"
+            for j in range(cols):
+                matrix[0][j]=0
+                
