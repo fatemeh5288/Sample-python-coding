@@ -1,0 +1,11 @@
+Given two integers a and b, return the sum of the two integers without using the operators + and -.
+
+bit manipulation time complexity O(1)
+
+class Solution:
+    def getSum(self, a: int, b: int) -> int:
+        while b!=0:            "this is the remaining value that we continue operation until this is zero- remaining happens only when we have both 1"
+            temp=(a & b)<<1    "we store remaining in temp variable and we shift it to the left because remaining should be added to the previous value"
+            a=a^b
+            b=temp
+        return a
